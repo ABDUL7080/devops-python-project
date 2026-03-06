@@ -1,11 +1,15 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.9'
+        }
+    }
 
     stages {
 
         stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/ABDUL7080/devops-python-project.git'
+                git 'https://github.com/ABDUL7080/devops-python-project.git'
             }
         }
 
