@@ -1,27 +1,29 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.9'
-        }
-    }
+    agent any
 
     stages {
 
-        stage('Clone Repository') {
+        stage('Clone Repo') {
             steps {
                 git 'https://github.com/ABDUL7080/devops-python-project.git'
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Build Docker Image') {
             steps {
-                sh 'pip install -r requirements.txt'
+                sh 'docker build -t python-devops-app .'
             }
         }
 
-        stage('Run Application') {
+        stage('Stop Old Container') {
             steps {
-                sh 'python app.py'
+                sh 'docker rm -f python-app || true'
+            }
+        }
+
+        stage('Run New Container') {
+            steps {
+                sh 'docker run -d -p 8001:8000 --name python-app python-devops-app'
             }
         }
 
