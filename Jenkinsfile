@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/ABDUL7080/devops-python-project.git'
+                git branch: 'main', url: 'https://github.com/ABDUL7080/devops-python-project.git'
             }
         }
 
@@ -15,7 +15,7 @@ pipeline {
             }
         }
 
-        stage('Run Application Test') {
+        stage('Run Application') {
             steps {
                 sh 'python app.py'
             }
